@@ -57,7 +57,7 @@ public class StudentServiceImpl implements StudentService {
         ResponseTemplateDto responseTemplateDto = new ResponseTemplateDto();
         Student student = studentRepository.findById(studentId);
 
-        Department department = restTemplate.getForObject("http://localhost:8081/api/v1/departments/" + student.getDepartmentId, Department.class);
+        Department department = restTemplate.getForObject("http://DEPARTMENT-SERVICE/api/v1/departments/" + student.getDepartmentId, Department.class);
 
 
         responseTemplateDto.setStudent(student);
