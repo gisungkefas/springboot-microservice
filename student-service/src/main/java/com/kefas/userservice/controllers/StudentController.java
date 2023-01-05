@@ -44,9 +44,9 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseTemplateDto getStudentWithDepartment(String email){
+    public ResponseTemplateDto getStudentWithDepartment(Long studentId){
 
-        return studentService.getStudentWithDepartment(email);
+        return studentService.getStudentWithDepartment(studentId);
     }
 
     @GetMapping("/get-all")
