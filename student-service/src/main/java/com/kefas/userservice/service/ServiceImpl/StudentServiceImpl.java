@@ -5,16 +5,25 @@ import com.kefas.userservice.exception.StudentAlreadyExistException;
 import com.kefas.userservice.exception.StudentNotFoundException;
 import com.kefas.userservice.repository.StudentRepository;
 import com.kefas.userservice.service.StudentService;
+import com.kefas.userservice.studentDto.Department;
+import com.kefas.userservice.studentDto.ResponseTemplateDto;
 import com.kefas.userservice.studentDto.StudentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
 
     @Override
@@ -41,6 +50,20 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> getAllStudent() {
         return studentRepository.findAll();
+    }
+
+    @Override
+    public ResponseTemplateDto getStudentWithDepartment(@PathVariable Long studentId) {
+        ResponseTemplateDto responseTemplateDto = new ResponseTemplateDto();
+        Student student = studentRepository.findById(studentId);
+
+        Department department = restTemplate.getForObject("http://localhost:8081/api/v1/departments/" + student.getDepartmentId, Department.class);
+
+
+        responseTemplateDto.setStudent(student);
+        responseTemplateDto.setDepartment(department);
+
+        return responseTemplateDto;
     }
 
     @Override

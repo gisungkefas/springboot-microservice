@@ -2,6 +2,7 @@ package com.kefas.userservice.controllers;
 
 import com.kefas.userservice.entities.Student;
 import com.kefas.userservice.service.StudentService;
+import com.kefas.userservice.studentDto.ResponseTemplateDto;
 import com.kefas.userservice.studentDto.StudentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,12 @@ public class StudentController {
         Student student = studentService.getStudentById(studentId);
         return new ResponseEntity<>(student, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/{id}")
+    public ResponseTemplateDto getStudentWithDepartment(String email){
+
+        return studentService.getStudentWithDepartment(email);
     }
 
     @GetMapping("/get-all")
